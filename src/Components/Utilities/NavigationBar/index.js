@@ -1,13 +1,17 @@
 "use client"
 
 import { useRef } from "react"
+import { useRouter } from "next/navigation"
 
 const Navbar = () => {
 
     const query = useRef()
+    const router = useRouter()
 
-    const handleSearch = () => {
-        alert(query.current.value)
+    const handleSearch = (event) => {
+        event.preventDefault()
+        const keyword = query.current.value
+        router.push(`/search/${keyword}`)
     }
 
     return (
