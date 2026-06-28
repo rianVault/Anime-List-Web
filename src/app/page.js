@@ -1,4 +1,5 @@
 import DefaultCard from "@/Components/Utilities/DefaultCard"
+import Link from "next/link"
 
 const Home = async () => {
 
@@ -9,13 +10,15 @@ const Home = async () => {
 
   return (
     <>
-    <h1>Top Anime</h1>
+      <h1>Top Anime</h1>
       <div className="grid grid-cols-5">
         {topAnime.data.map(data => (
-          <DefaultCard key={data.mal_id} title={data.title} age={data.rating} images={data.images.webp.image_url}></DefaultCard>
+          <Link href={`/Anime/${data.mal_id}`} key={data.mal_id}>
+            <DefaultCard key={data.mal_id} title={data.title} age={data.rating} images={data.images.webp.image_url} review={data.score} reviewer={data.scored_by}></DefaultCard>
+          </Link>
         ))}
       </div>
-        <h1>Top Manga</h1>
+      <h1>Top Manga</h1>
       <div className="grid grid-cols-5 pt-10">
         {topManga.data.map(data => (
           <DefaultCard key={data.mal_id} title={data.title} age={data.rating} images={data.images.webp.image_url}></DefaultCard>
