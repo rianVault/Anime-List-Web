@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-const DefaultCard = ({ title, images, age, review, reviewer }) => {
+const DefaultCard = ({ title, images, age, review, reviewer, halaman }) => {
     return (
         <div>
             <Image src={images} width={100} height={200}></Image>
@@ -10,6 +10,7 @@ const DefaultCard = ({ title, images, age, review, reviewer }) => {
                 <p>{review}</p>
                 <p>{reviewer} people</p>
             </div>
+
         </div>
     )
 }
