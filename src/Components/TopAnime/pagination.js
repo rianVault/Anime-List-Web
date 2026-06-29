@@ -1,18 +1,19 @@
 'use client'
 
-import { useState, useEffect, cache } from "react"
+import { useState, useEffect } from "react"
 import DefaultCard from "../Utilities/DefaultCard"
 import Link from "next/link"
 
 const Pagination = () => {
 
-    const [halaman, setHalaman] = useState(42)
+    const [halaman, setHalaman] = useState(1)
     const [animeData, setAnimeData] = useState([])
     const [animePage, setAnimePage] = useState([])
-    const maxPage = (animePage.last_visible_page)
+    const maxPage = animePage?.last_visible_page
+
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/now?limit=5&page=${halaman}`, {cache: 'no-cache'})
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/now?limit=5&page=${halaman}`, { cache: 'no-cache' })
             const topAnime = await response.json()
             setAnimeData(topAnime.data)
             setAnimePage(topAnime.pagination)
@@ -23,19 +24,19 @@ const Pagination = () => {
 
     return (
         <div>
-            <div className="flex">
+            <div className="h-125 flex">
                 <div className="grid grid-cols-5">
                     {animeData.map(data => (
                         <Link href={`/Anime/${data.mal_id}`}>
-                            <DefaultCard title={data.titles.title} age={data.rating} images={data.images.webp.image_url} review={data.score} reviewer={data.scored_by} ></DefaultCard>
+                            <DefaultCard title={data.title} age={data.rating} images={data.images.webp.image_url} review={data.score} reviewer={data.scored_by} ></DefaultCard>
                         </Link>
                     ))}
                 </div>
             </div>
             <div>halaman {animePage.current_page}</div>
             <div className="gap-4 flex">
-                <button onClick={() => setHalaman(halaman ==1 ? halaman = 1 : (prev) => prev - 1)} className="px-4 border-2 rounded cursor-pointer">Previous</button>
-                <button onClick={() => setHalaman(halaman == maxPage ? halaman = maxPage : (prev) => prev + 1)} className="px-4 border-2 rounded cursor-pointer">Next</button>
+                <button onClick={() => setHalaman((prev) => prev - 1)} disabled={halaman == 1} className="px-4 border-2 rounded cursor-pointer">Previous</button>
+                <button onClick={() => setHalaman((prev) => prev + 1)} disabled={halaman == maxPage} className="px-4 border-2 rounded cursor-pointer">Next</button>
             </div>
 
             <div>Max page: {maxPage}</div>
