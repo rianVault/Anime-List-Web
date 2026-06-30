@@ -51,9 +51,32 @@ const Pagination = () => {
             </div>
             <div>ini halaman {animePage.current_page}</div>
             <div className="gap-4 flex">
-                <button onClick={handlePrev} disabled={pageSekarang === 1} className="px-4 border-2 rounded cursor-pointer">Previous</button>
-                <button onClick={handleNext} disabled={pageSekarang == maxPage} className="px-4 border-2 rounded cursor-pointer">Next</button>
+                {pageSekarang <= 1 ? (
+                    <span className="px-4 border-2 rounded opacity-50 cursor-not-allowed">
+                        Previous
+                    </span>
+                ) : (
+                    <a
+                        href={`/TopAnime/${pageSekarang - 1}`}
+                        className="px-4 border-2 rounded cursor-pointer"
+                    >
+                        Previous
+                    </a>
+                )}
+                {pageSekarang >= maxPage ? (
+                    <span className="px-4 border-2 rounded opacity-50 cursor-not-allowed">
+                        Next
+                    </span>
+                ) : (
+                    <a
+                        href={`/TopAnime/${pageSekarang + 1}`}
+                        className="px-4 border-2 rounded cursor-pointer"
+                    >
+                        Next
+                    </a>
+                )}
             </div>
+            <div>max page: {maxPage}</div>
             {/* <div className="">
                 <Link href={`/TopAnime/${prev}`} className="px-4 border-2 rounded cursor-pointer">Previous</Link>
                 <Link href={`/TopAnime/${now}`} className="px-4 border-2 rounded cursor-pointer">Next</Link>
