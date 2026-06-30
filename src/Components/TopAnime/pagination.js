@@ -3,13 +3,14 @@
 import { useState, useEffect } from "react"
 import DefaultCard from "../Utilities/DefaultCard"
 import Link from "next/link"
+import HandlePage from "./handleclick"
 
 const Pagination = () => {
 
     const [halaman, setHalaman] = useState(1)
     const [animeData, setAnimeData] = useState([])
     const [animePage, setAnimePage] = useState([])
-    const maxPage = animePage?.last_visible_page
+    const maxPage = animePage.last_visible_page
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,12 +34,12 @@ const Pagination = () => {
                     ))}
                 </div>
             </div>
-            <div>halaman {animePage.current_page}</div>
-            <div className="gap-4 flex">
+            <div>ini halaman {animePage.current_page}</div>
+            {/* <div className="gap-4 flex">
                 <button onClick={() => setHalaman((prev) => prev - 1)} disabled={halaman == 1} className="px-4 border-2 rounded cursor-pointer">Previous</button>
                 <button onClick={() => setHalaman((prev) => prev + 1)} disabled={halaman == maxPage} className="px-4 border-2 rounded cursor-pointer">Next</button>
-            </div>
-
+            </div> */}
+            <HandlePage page={(1)}></HandlePage>
             <div>Max page: {maxPage}</div>
         </div>
     )

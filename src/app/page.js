@@ -1,4 +1,6 @@
+
 import Pagination from "@/Components/TopAnime/pagination"
+import Link from "next/link"
 
 const Home = async () => {
   const response2 = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/top/manga?limit=10`)
@@ -8,13 +10,16 @@ const Home = async () => {
 
   return (
     <>
-      <h1>Top Anime</h1>
+      <div className="flex justify-between">
+        <h1>Top Anime</h1>
+        <Link href={"/"}>Load more</Link>
+      </div>
       <div className="">
         <Pagination></Pagination>
       </div>
 
 
-      
+wsdasd
       {/* <h1>Top Manga</h1>
       <div className="grid grid-cols-5 pt-10">
         {topManga.data.map(data => (
