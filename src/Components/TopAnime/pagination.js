@@ -8,7 +8,6 @@ import HandlePage from "./handleclick"
 
 const Pagination = () => {
 
-    const router = useRouter()
     const params = useParams()
 
     const halaman = 1
@@ -30,13 +29,6 @@ const Pagination = () => {
         fetchData()
     }, [halaman])
 
-    const handleNext = () => {
-        router.push(`/TopAnime/${pageSekarang + 1}`)
-    }
-
-    const handlePrev = () => {
-        router.push(`/TopAnime/${pageSekarang - 1}`)
-    }
 
     return (
         <div>

@@ -2,6 +2,7 @@
 
 import { useRef } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 const Navbar = () => {
 
@@ -16,9 +17,9 @@ const Navbar = () => {
 
     return (
         <section className="flex justify-between">
-            <div>
+            <a href={"/"} className="p-10">
                 Tes
-            </div>
+            </a>
             <div>
                 <input className="outline-none border-2 rounded-full p-1 pl-10 w-sm m-3" placeholder="Search" ref={query}></input>
                 <button onClick={handleSearch}><a>Search</a></button>
