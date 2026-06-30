@@ -3,18 +3,25 @@
 import { useState, useEffect } from "react"
 import DefaultCard from "../Utilities/DefaultCard"
 import Link from "next/link"
+import { useRouter, useParams } from "next/navigation"
 import HandlePage from "./handleclick"
 
 const Pagination = () => {
 
-    const [halaman, setHalaman] = useState(1)
+    const router = useRouter()
+    const params = useParams()
+
+    const halaman = 1
+
+    const pageSekarang = Number(params.page) || 1
+
     const [animeData, setAnimeData] = useState([])
-    const [animePage, setAnimePage] = useState([])
-    const maxPage = animePage.last_visible_page
+    const [animePage, setAnimePage] = useState({})
+    const maxPage = animePage.last_visible_page || 1
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/now?limit=5&page=${halaman}`, { cache: 'no-cache' })
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/now?limit=10&page=${pageSekarang}`, { cache: 'no-cache' })
             const topAnime = await response.json()
             setAnimeData(topAnime.data)
             setAnimePage(topAnime.pagination)
@@ -22,6 +29,14 @@ const Pagination = () => {
 
         fetchData()
     }, [halaman])
+
+    const handleNext = () => {
+        router.push(`/TopAnime/${pageSekarang + 1}`)
+    }
+
+    const handlePrev = () => {
+        router.push(`/TopAnime/${pageSekarang - 1}`)
+    }
 
     return (
         <div>
@@ -35,12 +50,14 @@ const Pagination = () => {
                 </div>
             </div>
             <div>ini halaman {animePage.current_page}</div>
-            {/* <div className="gap-4 flex">
-                <button onClick={() => setHalaman((prev) => prev - 1)} disabled={halaman == 1} className="px-4 border-2 rounded cursor-pointer">Previous</button>
-                <button onClick={() => setHalaman((prev) => prev + 1)} disabled={halaman == maxPage} className="px-4 border-2 rounded cursor-pointer">Next</button>
+            <div className="gap-4 flex">
+                <button onClick={handlePrev} disabled={pageSekarang === 1} className="px-4 border-2 rounded cursor-pointer">Previous</button>
+                <button onClick={handleNext} disabled={pageSekarang == maxPage} className="px-4 border-2 rounded cursor-pointer">Next</button>
+            </div>
+            {/* <div className="">
+                <Link href={`/TopAnime/${prev}`} className="px-4 border-2 rounded cursor-pointer">Previous</Link>
+                <Link href={`/TopAnime/${now}`} className="px-4 border-2 rounded cursor-pointer">Next</Link>
             </div> */}
-            <HandlePage page={(1)}></HandlePage>
-            <div>Max page: {maxPage}</div>
         </div>
     )
 }

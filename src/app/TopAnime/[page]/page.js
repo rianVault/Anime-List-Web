@@ -1,4 +1,5 @@
 import HandlePage from "@/Components/TopAnime/handleclick"
+import Pagination from "@/Components/TopAnime/pagination"
 
 const MoreTopAnime = async ({ params }) => {
 
@@ -6,8 +7,7 @@ const MoreTopAnime = async ({ params }) => {
 
     return (
         <div>
-            ini halaman: {page}
-            <HandlePage page={page}></HandlePage>
+            <Pagination page={page}></Pagination>
         </div>
     )
 }
