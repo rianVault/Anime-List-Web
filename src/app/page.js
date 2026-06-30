@@ -8,7 +8,7 @@ const Home = async () => {
   const response2 = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/top/manga?limit=10`)
   const topAnime = await response1.json()
   const topManga = await response2.json()
-  
+
 
   // const [halaman, setHalaman] = useState()
 
@@ -21,7 +21,9 @@ const Home = async () => {
       <div className="">
         <div className="grid grid-cols-5 pt-10">
           {topAnime.data.map(data => (
-            <DefaultCard key={data.mal_id} title={data.title} age={data.rating} images={data.images.webp.image_url}></DefaultCard>
+            <Link href={`/Anime/${data.mal_id}`} key={data.mal_id}>
+              <DefaultCard key={data.mal_id} title={data.title} age={data.rating} images={data.images.webp.image_url} review={data.score} reviewer={data.scored_by}></DefaultCard>
+            </Link>
           ))}
         </div>
       </div>
