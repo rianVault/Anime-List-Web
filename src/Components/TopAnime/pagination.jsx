@@ -2,8 +2,11 @@
 
 import { useState, useEffect } from "react"
 import Card from "../Utilities/Card"
+import { useRouter } from "next/navigation"
 
 const Pagination = () => {
+    
+    const route = useRouter()
 
     const [animeData, setAnimeData] = useState([])
     const [animePage, setAnimePage] = useState({})
@@ -21,10 +24,12 @@ const Pagination = () => {
 
     function handlePrev() {
         setPageSekarang(pageSekarang - 1)
+        route.push(`TopAnime?q=${pageSekarang - 1}`)
     }
 
     function handleNext() {
         setPageSekarang(pageSekarang + 1)
+        route.push(`TopAnime?q=${pageSekarang + 1}`)
     }
     
     return (
@@ -32,7 +37,7 @@ const Pagination = () => {
             <div className="h-130">
                 <Card api={animeData}></Card>
             </div>
-            <div>ini halaman {animePage?.current_page}</div>
+            <div>ini halaman {pageSekarang}</div>
             <div className="gap-4 flex">
                 <button onClick={handlePrev} disabled={pageSekarang === 1} className="p-2 border rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-default">prev</button>
                 <button onClick={handleNext} disabled={pageSekarang === animePage?.last_visible_page} className="p-2 border rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-default">next</button>
