@@ -1,78 +1,43 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import DefaultCard from "../Utilities/DefaultCard"
-import Link from "next/link"
-import { useRouter, useParams } from "next/navigation"
-import HandlePage from "./handleclick"
+import Card from "../Utilities/Card"
 
 const Pagination = () => {
 
-    const params = useParams()
-
-    const halaman = 1
-
-    const pageSekarang = Number(params.page) || 1
-
     const [animeData, setAnimeData] = useState([])
     const [animePage, setAnimePage] = useState({})
-    const maxPage = animePage.last_visible_page
+    const [pageSekarang, setPageSekarang] = useState(1)
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/now?limit=5&page=${pageSekarang}`, { cache: 'no-cache' })
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/now?limit=10&page=${pageSekarang}`, { cache: 'no-cache' })
             const topAnime = await response.json()
-            setAnimeData(topAnime.data)
-            setAnimePage(topAnime.pagination)
+            setAnimeData(topAnime?.data)
+            setAnimePage(topAnime?.pagination)
         }
-
         fetchData()
-    }, [halaman])
+    }, [pageSekarang])
 
+    function handlePrev() {
+        setPageSekarang(pageSekarang - 1)
+    }
 
+    function handleNext() {
+        setPageSekarang(pageSekarang + 1)
+    }
+    
     return (
         <div>
-            <div className="h-125 flex">
-                <div className="grid grid-cols-5">
-                    {animeData?.map(data => (
-                        <Link href={`/Anime/${data.mal_id}`}>
-                            <DefaultCard title={data.title} age={data.rating} images={data.images.webp.image_url} review={data.score} reviewer={data.scored_by} ></DefaultCard>
-                        </Link>
-                    ))}
-                </div>
+            <div className="h-130">
+                <Card api={animeData}></Card>
             </div>
             <div>ini halaman {animePage?.current_page}</div>
             <div className="gap-4 flex">
-                {pageSekarang <= 1 ? (
-                    <span className="px-4 border-2 rounded opacity-50 cursor-not-allowed">
-                        Previous
-                    </span>
-                ) : (
-                    <a
-                        href={`/TopAnime/${pageSekarang - 1}`}
-                        className="px-4 border-2 rounded cursor-pointer"
-                    >
-                        Previous
-                    </a>
-                )}
-                {pageSekarang >= maxPage ? (
-                    <span className="px-4 border-2 rounded opacity-50 cursor-not-allowed">
-                        Next
-                    </span>
-                ) : (
-                    <a
-                        href={`/TopAnime/${pageSekarang + 1}`}
-                        className="px-4 border-2 rounded cursor-pointer"
-                    >
-                        Next
-                    </a>
-                )}
+                <button onClick={handlePrev} disabled={pageSekarang === 1} className="p-2 border rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-default">prev</button>
+                <button onClick={handleNext} disabled={pageSekarang === animePage?.last_visible_page} className="p-2 border rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-default">next</button>
             </div>
-            <div>max page: {maxPage}</div>
-            {/* <div className="">
-                <Link href={`/TopAnime/${prev}`} className="px-4 border-2 rounded cursor-pointer">Previous</Link>
-                <Link href={`/TopAnime/${now}`} className="px-4 border-2 rounded cursor-pointer">Next</Link>
-            </div> */}
+            <div>max page: {animePage?.last_visible_page}</div>
         </div>
     )
 }

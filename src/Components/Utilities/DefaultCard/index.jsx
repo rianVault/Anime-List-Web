@@ -10,7 +10,6 @@ const DefaultCard = ({ title, images, age, review, reviewer, halaman }) => {
                 <p>{review}</p>
                 <p>{reviewer} people</p>
             </div>
-
         </div>
     )
 }
