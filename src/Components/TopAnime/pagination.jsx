@@ -16,11 +16,11 @@ const Pagination = () => {
 
     const [animeData, setAnimeData] = useState([])
     const [animePage, setAnimePage] = useState({})
-    const maxPage = animePage.last_visible_page || 1
+    const maxPage = animePage.last_visible_page
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/now?limit=10&page=${pageSekarang}`, { cache: 'no-cache' })
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/now?limit=5&page=${pageSekarang}`, { cache: 'no-cache' })
             const topAnime = await response.json()
             setAnimeData(topAnime.data)
             setAnimePage(topAnime.pagination)
@@ -34,14 +34,14 @@ const Pagination = () => {
         <div>
             <div className="h-125 flex">
                 <div className="grid grid-cols-5">
-                    {animeData.map(data => (
+                    {animeData?.map(data => (
                         <Link href={`/Anime/${data.mal_id}`}>
                             <DefaultCard title={data.title} age={data.rating} images={data.images.webp.image_url} review={data.score} reviewer={data.scored_by} ></DefaultCard>
                         </Link>
                     ))}
                 </div>
             </div>
-            <div>ini halaman {animePage.current_page}</div>
+            <div>ini halaman {animePage?.current_page}</div>
             <div className="gap-4 flex">
                 {pageSekarang <= 1 ? (
                     <span className="px-4 border-2 rounded opacity-50 cursor-not-allowed">
