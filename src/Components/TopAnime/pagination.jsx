@@ -2,15 +2,16 @@
 
 import { useState, useEffect } from "react"
 import Card from "../Utilities/Card"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 
 const Pagination = () => {
     
     const route = useRouter()
+    const searchParams = useSearchParams()
 
     const [animeData, setAnimeData] = useState([])
     const [animePage, setAnimePage] = useState({})
-    const [pageSekarang, setPageSekarang] = useState(1)
+    const pageSekarang = Number(searchParams.get('q')) || 1
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,13 +24,11 @@ const Pagination = () => {
     }, [pageSekarang])
 
     function handlePrev() {
-        setPageSekarang(pageSekarang - 1)
-        route.push(`TopAnime?q=${pageSekarang - 1}`)
+        route.push(`/TopAnime?q=${pageSekarang - 1}`)
     }
 
     function handleNext() {
-        setPageSekarang(pageSekarang + 1)
-        route.push(`TopAnime?q=${pageSekarang + 1}`)
+        route.push(`/TopAnime?q=${pageSekarang + 1}`)
     }
     
     return (
