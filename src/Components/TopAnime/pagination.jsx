@@ -15,7 +15,7 @@ const Pagination = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/now?limit=10&page=${pageSekarang}`, { cache: 'no-cache' })
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/now?limit=15&page=${pageSekarang}`, { cache: 'no-cache' })
             const topAnime = await response.json()
             setAnimeData(topAnime?.data)
             setAnimePage(topAnime?.pagination)
@@ -38,15 +38,17 @@ const Pagination = () => {
                     <div>not found</div>
                 ) : (
                     <div>
-                        <div className="h-130">
+                        <div className="">
                             <Card api={animeData}></Card>
                         </div>
-                        <div>ini halaman {pageSekarang}</div>
-                        <div className="gap-4 flex">
-                            <button onClick={handlePrev} disabled={pageSekarang === 1} className="p-2 border rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-default">prev</button>
-                            <button onClick={handleNext} disabled={pageSekarang === animePage?.last_visible_page} className="p-2 border rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-default">next</button>
+                        <div className="absolute right-0">
+                            <div className="gap-4 flex pt-10">
+                                <button onClick={handlePrev} disabled={pageSekarang === 1} className="p-2 border rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-default">prev</button>
+                                <button onClick={handleNext} disabled={pageSekarang === animePage?.last_visible_page} className="p-2 border rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-default">next</button>
+                            </div>
+                            <div>ini halaman {pageSekarang}</div>
+                            <div>max page: {animePage?.last_visible_page}</div>
                         </div>
-                        <div>max page: {animePage?.last_visible_page}</div>
                     </div>
                 )}
             </div>

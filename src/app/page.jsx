@@ -1,7 +1,5 @@
 
-import Pagination from "@/Components/TopAnime/pagination"
 import Card from "@/Components/Utilities/Card"
-import DefaultCard from "@/Components/Utilities/DefaultCard"
 import Link from "next/link"
 
 const Home = async () => {

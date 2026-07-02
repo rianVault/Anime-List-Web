@@ -1,4 +1,3 @@
-import HandlePage from "@/Components/TopAnime/handleclick"
 import Pagination from "@/Components/TopAnime/pagination"
 
 const MoreTopAnime = async ({ params }) => {
