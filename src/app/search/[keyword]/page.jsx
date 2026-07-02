@@ -1,6 +1,4 @@
 import Card from "@/Components/Utilities/Card"
-import DefaultCard from "@/Components/Utilities/DefaultCard"
-import Link from "next/link"
 
 const Search = async ({ params }) => {
 
