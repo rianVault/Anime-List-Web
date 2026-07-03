@@ -14,10 +14,6 @@ const AnimePage = async ({ params }) => {
     const dataRekomendasiMentah = await res2.json()
     const dataRekomendasi = dataRekomendasiMentah.data
 
-    console.log("=========================================")
-    console.log("ISI RAW RESPONSE REKOMENDASI:", dataRekomendasiMentah)
-    console.log("=========================================")
-
     return (
         <div>
             <div>{dataAnime.title}</div>
