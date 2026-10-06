@@ -8,7 +8,6 @@ const Pagination = () => {
 
     const route = useRouter()
     const searchParams = useSearchParams()
-
     const [animeData, setAnimeData] = useState([])
     const [animePage, setAnimePage] = useState({})
     const pageSekarang = Number(searchParams.get('q')) || 1
